@@ -18,34 +18,35 @@
 </body>
 </html>
 <script>
-
+//Fonction d'affichage des données d'un ggogle sheet
+//Recupération des données avec la fonction jQuery getJSON
     $.getJSON("https://spreadsheets.google.com/feeds/cells/1LOz7PlNS2ZXaIDCrZER6qLfQUBgbfIGu4DMxx_rdBD4/1/public/full?alt=json", function (data) {
         console.log(data.feed.entry);
-        
-
-      var sheetData = data.feed.entry;
-
-      var i=0;
-      var y=1;
-      var nom;
-      var max=0;
-      var col;
-      
-      
-
-      while(i < sheetData.length){
-        nom = data.feed.entry[i]['gs$cell']['$t'];
-        col = data.feed.entry[i]['gs$cell']['col'];
-        if (col==1){
-            document.getElementById('demo').innerHTML += ('<br>');
-           
+//Déclaration des variables
+//Déclaration des élements feed du json
+        var sheetData = data.feed.entry;
+        var i=0;
+        var y=1;
+     
+        while(i < sheetData.length){
+//Récupération des données et de l'id des cellules
+            var nom = data.feed.entry[i]['gs$cell']['$t'];
+            var col = data.feed.entry[i]['gs$cell']['col'];
+            var row = data.feed.entry[i]['gs$cell']['row'];
+//Saut de ligne
+            if (col==1){
+                document.getElementById('demo').innerHTML += ('<br>');
+            }
+ //Création de l'en-tête
+            if (row==1){
+                document.getElementById('demo').innerHTML += (' <b style="text-transform: uppercase;">'+nom+'</b> ');
+//Affichage des données
+            }else{
+                document.getElementById('demo').innerHTML += (" "+nom+" ");
+            }      
+            y++  
+            i++
         }
-        document.getElementById('demo').innerHTML += (" "+nom+" ");
-       
-        y++  
-        i++
-      }
-      alert (y);
     });
     
   
