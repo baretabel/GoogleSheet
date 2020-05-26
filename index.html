@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<body>
+    <div class="container text-center my-4">
+
+        
+        
+         <p id="demo"></p>
+   
+    
+      </div>
+</body>
+</html>
+<script>
+
+    $.getJSON("https://spreadsheets.google.com/feeds/cells/1LOz7PlNS2ZXaIDCrZER6qLfQUBgbfIGu4DMxx_rdBD4/1/public/full?alt=json", function (data) {
+        console.log(data.feed.entry);
+        
+
+      var sheetData = data.feed.entry;
+
+      var i=0;
+      var y=1;
+      var nom;
+      var max=0;
+      var col;
+      
+      
+
+      while(i < sheetData.length){
+        nom = data.feed.entry[i]['gs$cell']['$t'];
+        col = data.feed.entry[i]['gs$cell']['col'];
+        if (col==1){
+            document.getElementById('demo').innerHTML += ('<br>');
+           
+        }
+        document.getElementById('demo').innerHTML += (" "+nom+" ");
+       
+        y++  
+        i++
+      }
+      alert (y);
+    });
+    
+  
+</script>
