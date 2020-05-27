@@ -34,7 +34,10 @@
             var col = data.feed.entry[i]['gs$cell']['col'];
             var row = data.feed.entry[i]['gs$cell']['row'];
 //je remplace les caractères spéciaux éventuel par leur caractère ascii
-                nom=htmlentities(nom) ; 
+            nom=htmlentities(nom) ;
+            if (nom == 'Photo'){
+                var img= col;
+            } 
 //Saut de ligne
             if (col==1){
                 document.getElementById('demo').innerHTML += ('<br>');
@@ -44,7 +47,12 @@
                 document.getElementById('demo').innerHTML += (' <b style="text-transform: uppercase;">'+nom+'</b> ');
 //Affichage des données
             }else{
-                document.getElementById('demo').innerHTML += (" "+nom+" ");
+    //Affichage des images Data-Uri            
+                if(col==img){
+                    document.getElementById('demo').innerHTML += (' <img src="data:image/png;base64,'+nom+'"/> ');   
+                }else{
+                    document.getElementById('demo').innerHTML += (" "+nom+" ");
+                }
             }      
             y++  
             i++
@@ -52,12 +60,6 @@
     });
     
     function htmlentities(str){
-        var str = str.replace(/&/g,"&amp;");
-        str = str.replace(/</g,"&lt;");
-        str = str.replace(/>/g,"&gt;");
-        
-        str = str.replace(/"/g,"&quot;");
-        str = str.replace(/'/g,"&apos;");
-        return str;
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 </script>
